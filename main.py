@@ -1,59 +1,95 @@
 from flask import Flask
-from flask_restful import Api, Resource, reqparse, abort
+from flask_restful import Api, Resource, reqparse, fields, marshal_with, abort
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 api = Api(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
+db.create_all()
 
-pet_args = reqparse.RequestParser()
-pet_args.add_argument("name", type=str, help="Name of the pet", required=True)
-pet_args.add_argument("age", type=int, help="Age of the pet", required=True)
-pet_args.add_argument("isCute", type=bool, help="Cuteness of the pet", required=True)
 
-pets = {
-        "1": {
-            "name": "rafels",
-            "age": 12,
-            "isCute": True
-        },
-        "2": {
-            "name": "toffy",
-            "age": 5,
-            "isCute": True
-        },
+class PetModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    isPlayful = db.Column(db.Boolean, nullable=False)
+
+    def __repr__(self):
+        return f"Pet(name = {self.name}, age = {self.age}, isPlayful = {self.isPlayful})"
+
+
+db.drop_all()
+db.create_all()
+
+pet_post_args = reqparse.RequestParser()
+pet_post_args.add_argument("name", type=str, help="Name of the pet", required=True)
+pet_post_args.add_argument("age", type=int, help="Age of the pet", required=True)
+pet_post_args.add_argument("isPlayful", type=bool, help="Playfulness of the pet", required=True)
+
+pet_put_args = reqparse.RequestParser()
+pet_put_args.add_argument("name", type=str, help="Name of the pet")
+pet_put_args.add_argument("age", type=int, help="Age of the pet")
+pet_put_args.add_argument("isPlayful", type=bool, help="Playfulness of the pet")
+
+resource_fields = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'age': fields.Integer,
+    'isPlayful': fields.Boolean
 }
 
 
-def abort_if_pet_not_found(pet_id):
-    if pet_id not in pets:
-        abort(404, message="Pet with id {} not found".format(pet_id))
-
-
 class Pets(Resource):
+    @marshal_with(resource_fields)
     def get(self):
-        return pets
+        result = PetModel.query.all()
+        result_list = list()
+        for pet in result:
+            result_list.append(pet)
 
+        return result_list
+
+    @marshal_with(resource_fields)
     def post(self):
-        args = pet_args.parse_args()
-        last_key = list(pets)[-1]
-        next_key = str(int(last_key) + 1)
-        pets[next_key] = args
-        return pets[next_key]
+        args = pet_post_args.parse_args()
+        pet = PetModel(name=args['name'], age=args['age'], isPlayful=args['isPlayful'])
+        db.session.add(pet)
+        db.session.commit()
+        return pet, 201
 
 
 class Pet(Resource):
+    @marshal_with(resource_fields)
     def get(self, pet_id):
-        abort_if_pet_not_found(pet_id)
-        return pets[pet_id]
+        result = PetModel.query.filter_by(id=pet_id).first()
+        if not result:
+            abort(404, message="Unable to find pet with id {}".format(pet_id))
+        return result
 
+    @marshal_with(resource_fields)
     def put(self, pet_id):
-        abort_if_pet_not_found(pet_id)
-        args = pet_args.parse_args()
-        pets[pet_id] = args
-        return pets[pet_id], 201
+        args = pet_put_args.parse_args()
+        result = PetModel.query.filter_by(id=pet_id).first()
+        if not result:
+            abort(404, message="Unable to find pet with id {}".format(pet_id))
+
+        if args['name']:
+            result.name = args['name']
+        if args['age']:
+            result.age = args['age']
+        if args['isPlayful']:
+            result.isPlayful = False
+
+        db.session.commit()
+        return result
 
     def delete(self, pet_id):
-        abort_if_pet_not_found(pet_id)
-        del pets[pet_id]
+        result = PetModel.query.filter_by(id=pet_id).first()
+        if not result:
+            abort(404, message="Unable to find pet with id {}".format(pet_id))
+        db.session.delete(result)
+        db.session.commit()
         return '', 204
 
 
