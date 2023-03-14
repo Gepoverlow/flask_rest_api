@@ -46,7 +46,7 @@ class Pet(Resource):
         return pets[pet_id]
 
     def put(self, pet_id):
-        # abort_if_pet_not_found(pet_id)
+        abort_if_pet_not_found(pet_id)
         args = pet_args.parse_args()
         pets[pet_id] = args
         return pets[pet_id], 201
