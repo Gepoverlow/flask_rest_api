@@ -6,7 +6,6 @@ app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
-db.create_all()
 
 
 class PetModel(db.Model):
@@ -74,12 +73,12 @@ class Pet(Resource):
         if not result:
             abort(404, message="Unable to find pet with id {}".format(pet_id))
 
-        if args['name']:
+        if args['name'] is not None:
             result.name = args['name']
-        if args['age']:
+        if args['age'] is not None:
             result.age = args['age']
-        if args['isPlayful']:
-            result.isPlayful = False
+        if args['isPlayful'] is not None:
+            result.isPlayful = args['isPlayful']
 
         db.session.commit()
         return result
