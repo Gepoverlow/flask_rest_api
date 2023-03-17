@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(main.settings[os.environ.get('APPLICATION_ENV', 'default')])
 
 # Database ORM Initialization
-from app import models
+from app import model
 db.init_app(app)
 
 with app.app_context():

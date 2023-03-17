@@ -1,5 +1,5 @@
 from flask_restful import Api
-from app.controllers.pet import PetResource, PetsResource
+from app.controller.pet import PetResource, PetsResource
 
 # Flask API Configuration
 api = Api(
