@@ -11,3 +11,5 @@ six==1.15.0
 SQLAlchemy==1.3.18
 Werkzeug==2.2.2
 gunicorn
+
+spyne~=2.14.0
