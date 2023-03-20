@@ -1,13 +1,15 @@
 from spyne import Iterable, Integer, Boolean, Unicode, rpc, Application, Service
 from spyne.protocol.soap import Soap11
 from app.service import pet_service
+from app import app
 
 
 class UpdatePetService(Service):
     @rpc(Integer, Unicode, Integer, Boolean, _returns=Iterable(Unicode))
     def update_pet(ctx, pet_id, new_name, new_age, new_playfulness):
-        pet_service.update_pet_with_soap(pet_id, new_name, new_age, new_playfulness)
-        yield 'ok'
+        with app.app_context():
+            result = pet_service.update_pet_with_soap(pet_id, new_name, new_age, new_playfulness)
+            yield f"pet name: {result.name}, pet age: {result.age}, pet playfulness: {result.isPlayful}"
 
 
 def create_app():

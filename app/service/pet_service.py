@@ -56,9 +56,13 @@ def update_pet(pet_id):
 
 def update_pet_with_soap(pet_id, new_name, new_age, new_playfulness):
     result = Pet.query.filter_by(id=pet_id).first()
+
     result.name = new_name
     result.age = new_age
     result.isPlayful = new_playfulness
+
+    db.session.commit()
+    return result
 
 
 def delete_pet(pet_id):
