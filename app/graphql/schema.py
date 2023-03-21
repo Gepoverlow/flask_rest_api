@@ -25,7 +25,7 @@ class DeletePet(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    person = graphene.Field(PetObject)
+    pet = graphene.Field(PetObject)
 
 
 class Mutation(graphene.ObjectType):
