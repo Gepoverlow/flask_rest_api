@@ -34,3 +34,16 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
     '/soap': WsgiApplication(spyne.create_app())
 })
 
+from app.graphql.schema import schema
+from flask_graphql import GraphQLView
+
+
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True
+    )
+)
+

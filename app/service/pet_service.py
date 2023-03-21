@@ -76,3 +76,12 @@ def delete_pet(pet_id):
     db.session.commit()
     return '', 204
 
+
+def delete_pet_with_graphql(pet_id):
+    result = Pet.query.filter_by(id=pet_id).first()
+
+    db.session.delete(result)
+    db.session.commit()
+
+    return result
+
