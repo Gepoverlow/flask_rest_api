@@ -26,7 +26,7 @@ with app.app_context():
 # Flask API Initialization
 api.init_app(app)
 
-from main import spyne
+from app.soap import spyne
 
 # SOAP services are distinct wsgi applications, we should use dispatcher
 # middleware to bring all aps together
@@ -34,5 +34,3 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
     '/soap': WsgiApplication(spyne.create_app())
 })
 
-if __name__ == '__main__':
-    app.run()
