@@ -1,4 +1,7 @@
 from flask_restful import reqparse, abort
+from graphql import GraphQLError
+from spyne import Fault
+
 from app import db
 from app.model import Pet
 
@@ -56,6 +59,8 @@ def update_pet(pet_id):
 
 def update_pet_with_soap(pet_id, new_name, new_age, new_playfulness):
     result = Pet.query.filter_by(id=pet_id).first()
+    if not result:
+        return
 
     if new_name is not None:
         result.name = new_name
@@ -79,6 +84,8 @@ def delete_pet(pet_id):
 
 def delete_pet_with_graphql(pet_id):
     result = Pet.query.filter_by(id=pet_id).first()
+    if not result:
+        raise GraphQLError(f"Pet with id {pet_id} has not been found")
 
     db.session.delete(result)
     db.session.commit()
