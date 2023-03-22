@@ -1,6 +1,5 @@
 from flask_restful import reqparse, abort
 from graphql import GraphQLError
-from spyne import Fault
 
 from app import db
 from app.model import Pet
