@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "32c03f09-f445-46c9-a6e7-3436c874ef6d",
+		"name": "pet_store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22896175"
+	},
+	"item": [
+		{
+			"name": "REST OPS",
+			"item": [
+				{
+					"name": "Get All Pets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rest/pets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rest",
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Pet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rafaelis\",\n    \"age\": 34,\n    \"isPlayful\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/rest/pets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rest",
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pet By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"updated pet name\",\n    \"age\": 33,\n    \"isPlayful\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pet/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pet By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rest/pet/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rest",
+								"pet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pet By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rest/pet/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rest",
+								"pet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SOAP OPS",
+			"item": [
+				{
+					"name": "get wsdl",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/soap?wsdl",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"soap"
+							],
+							"query": [
+								{
+									"key": "wsdl",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pet By Id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <update_pet xmlns=\"spyne.examples.flask\">\n        <pet_id>1</pet_id>\n        <new_name>Updated Name</new_name>\n        <new_age>69</new_age>\n        <new_playfulness>false</new_playfulness>\n    </update_pet>\n  </soap:Body>\n</soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/soap",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"soap"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GRAPHQL OPS",
+			"item": [
+				{
+					"name": "Delete Pet By Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deletePet(petId:\"1\"){\n        pet{\n            name\n            age\n            isPlayful\n        },\n        ok\n    }\n\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:8000",
+			"type": "string"
+		}
+	]
+}
