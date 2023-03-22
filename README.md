@@ -25,7 +25,7 @@ So the api should be able to:
 - Graphene for building GraphQL schemas/types fast and easily
 - Gunicorn for a Python WSGI HTTP Server
 - Docker to run Gunicorn and make development easier overall
-- Postman to make sure test endpoints
+- Postman to make sure the endpoints work properly
 - A variety of more toolkits to help tie all these together and handle errors
 
 
