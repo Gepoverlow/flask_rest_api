@@ -21,7 +21,7 @@ So the api should be able to:
 - Flask 
 - Flask-RESTful to build quick REST APIs
 - SQLAlchemy in-memory database
-- Spyne RPC Toolkit to process and execute SOAP requests
+- Spyne RPC for a WSGI App that can process SOAP requests
 - Graphene for building GraphQL schemas/types fast and easily
 - Gunicorn for a Python WSGI HTTP Server
 - Docker to run Gunicorn and make development easier overall
