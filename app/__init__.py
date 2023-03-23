@@ -7,9 +7,9 @@ from app import model
 
 
 # BASE APP & ADDING REST FUNCTIONALITY ON API
-def create_app():
+def create_app(mode):
     app = Flask(__name__)
-    app.config.from_object(main.settings[os.environ.get('APPLICATION_ENV', 'default')])
+    app.config.from_object(main.settings[os.environ.get('APPLICATION_ENV', mode)])
 
     db.init_app(app)
 
@@ -20,7 +20,7 @@ def create_app():
 
 
 # INITIALIZING APP
-app = create_app()
+app = create_app('development')
 
 
 # CREATING TABLES BASED ON THE MODELS

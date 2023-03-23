@@ -6,7 +6,7 @@ from app.main.database import db
 
 @pytest.fixture()
 def app():
-    app = create_app()
+    app = create_app('testing')
 
     with app.app_context():
         db.create_all()

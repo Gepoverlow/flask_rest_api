@@ -15,25 +15,34 @@ class Config:
 
     # sqlalchemy database main
     # --------------------------------------------------------------------
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///pet-database.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(Config):
 
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///pet-database.db'
     ENV = os.environ.get("FLASK_ENV", "development")
     DEBUG = True
     ASSETS_DEBUG = True
 
 
 class ProductionConfig(Config):
-
+    SQLALCHEMY_DATABASE_URI = 'TBD'
     ENV = os.environ.get("FLASK_ENV", "production")
     DEBUG = False
     USE_RELOADER = False
 
 
+class TestingConfig(Config):
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    ENV = os.environ.get("FLASK_ENV", "testing")
+    TESTING = True
+
+
 settings = {
+    'testing': TestingConfig,
     'development': DevelopmentConfig,
     'production': ProductionConfig,
     'default': DevelopmentConfig,
