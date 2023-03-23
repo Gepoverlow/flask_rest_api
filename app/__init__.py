@@ -11,7 +11,12 @@ from app import model
 def create_app():
     app = Flask(__name__)
     app.config.from_object(main.settings[os.environ.get('APPLICATION_ENV', 'default')])
+
     db.init_app(app)
+
+    # Flask API Initialization
+    api.init_app(app)
+
     return app
 
 
@@ -21,9 +26,6 @@ app = create_app()
 with app.app_context():
     db.create_all()
 
-
-# Flask API Initialization
-api.init_app(app)
 
 from app.soap import spyne
 

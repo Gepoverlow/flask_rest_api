@@ -23,3 +23,5 @@ spyne==2.14.0
 SQLAlchemy==1.3.18
 typing_extensions==4.5.0
 Werkzeug==2.2.2
+
+pytest~=7.2.2
