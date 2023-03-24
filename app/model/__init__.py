@@ -1,2 +1,2 @@
-from app.model.pet import Pet
+from app.model.pet_model import PetModel
 

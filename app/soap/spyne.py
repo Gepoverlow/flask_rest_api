@@ -8,7 +8,7 @@ class UpdatePetService(Service):
     @rpc(Integer, Unicode, Integer, Boolean, _returns=Iterable(Unicode))
     def update_pet(ctx, pet_id, new_name, new_age, new_playfulness):
         with app.app_context():
-            result = pet_service.update_pet_with_soap(pet_id, new_name, new_age, new_playfulness)
+            result = pet_service.update_pet(pet_id, new_name, new_age, new_playfulness)
             if not result:
                 yield f"Pet with id {pet_id} not found"
             else:

@@ -26,6 +26,7 @@ So the api should be able to:
 - Gunicorn for a Python WSGI HTTP Server
 - Docker to run Gunicorn and make development easier overall
 - Postman to make sure the endpoints work properly
+- Pytest to test basic endpoints
 - A variety of more toolkits to help tie all these together and handle errors
 
 

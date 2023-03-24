@@ -2,7 +2,7 @@ from sqlalchemy import Integer, String, Boolean
 from app import db
 
 
-class Pet(db.Model):
+class PetModel(db.Model):
 
     __tablename__ = 'pets'
 
