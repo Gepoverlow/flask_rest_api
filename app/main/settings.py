@@ -20,15 +20,15 @@ class Config:
 
 class DevelopmentConfig(Config):
 
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///pet-database.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     ENV = os.environ.get("FLASK_ENV", "development")
     DEBUG = True
     ASSETS_DEBUG = True
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'TBD'
+
+    SQLALCHEMY_DATABASE_URI = 'TBD-probably in memory too'
     ENV = os.environ.get("FLASK_ENV", "production")
     DEBUG = False
     USE_RELOADER = False

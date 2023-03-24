@@ -160,7 +160,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <update_pet xmlns=\"spyne.examples.flask\">\n        <pet_id>1</pet_id>\n        <new_name>Updated Name</new_name>\n        <new_age>69</new_age>\n        <new_playfulness>false</new_playfulness>\n    </update_pet>\n  </soap:Body>\n</soap:Envelope>",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <update_pet xmlns=\"spyne.examples.flask\">\n        <pet_id>1</pet_id>\n        <new_name>Updated Name</new_name>\n        <new_age>70</new_age>\n        <new_playfulness>false</new_playfulness>\n    </update_pet>\n  </soap:Body>\n</soap:Envelope>",
 							"options": {
 								"raw": {
 									"language": "xml"
